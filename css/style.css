@@ -1,0 +1,41 @@
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.login-boxx {
+    margin-top: 10%;
+}
+
+.box {
+    background-color: #d0cfd0;
+    box-shadow: 1rem .8rem 1.7rem rgba(0, 0, 0, 0.5);
+    border: 1px solid red;
+    border-top-right-radius: 8%;
+    border-bottom-left-radius: 8%;
+}
+
+.mt {
+    margin-top: 20px;
+}
+
+.pagination li {
+    border: 1px solid black;
+}
+
+.pagination li a:hover {
+    background-color: black;
+    color: white;
+    transition: .5s; 
+}
+
+nav form .buscador {
+    padding-top: 3px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    border-radius: 5%;
+    border: 1px solid white;
+    margin-bottom: 0px;
+}

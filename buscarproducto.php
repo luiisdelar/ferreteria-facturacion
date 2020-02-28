@@ -1,0 +1,90 @@
+<?php require("cabecera.php"); 
+	session_start();
+    $session = $_SESSION['rol'];
+    if($session != 'admin' && $session != 'empleado'){
+        header("location: usuarionoregistrado.php");
+    }
+
+    $codigo=$_POST["codigo"];
+
+    require("connection.php");
+    
+    $sql="select *
+          from productos
+          where codigo='$codigo'";
+    $resultado=$base->prepare($sql);
+	$resultado->execute();
+    $registro=$resultado->fetch(PDO::FETCH_ASSOC);
+  
+?>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+	<div>  
+		<a class="navbar-brand" href="index.php"> Busqueda </a>
+	</div>  
+	<form action="buscarproducto.php" method="POST">
+		<div class="justify-content-end">
+			<div class="justify-content-end">
+				
+					<input type="text" placeholder="Codigo Producto" name="codigo" class="buscador">
+					<input class="btn btn-outline-light" type="submit" name="buscar" value="Buscar">
+					
+			
+				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Agregar Producto" onclick="location.href='aggproducto.php';">
+				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Salir" onclick="location.href='close.php';">
+			</div>
+		</div>
+	</form>	
+</nav>
+
+<div class="container">
+	<h2 class="text-center"> Resultados de la busqueda </h4>
+	<div class="table-responsive">
+		<table class="table table-dark table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Codigo</th>
+					<th>Cantidad</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+            <?php 
+               if($registro){
+			?> 
+					<tr>
+						<td><?php echo $registro['nombre']; ?></td>
+						<td><?php echo $registro['codigo']; ?></td>
+						<td><?php echo $registro['cantidad']; ?></td>
+						<td>
+                        <?php 
+                            if($session=='admin'){
+                        ?>
+							<form method="POST" action="editarproducto.php">
+								<input class='btn btn-warning' type='submit' name='edit' value='Actualizar'>
+                                <input type="hidden" value="<?php echo $registro["id"]; ?>" name="id">
+                                <input class="btn btn-danger" type="button" name="delete" value="Borrar" onclick='deletee(<?php echo $registro["id"]; ?>)'>
+                            </form>
+                        <?php } ?>   
+						</td>
+					</tr>
+
+               <?php } ?> 
+            </tbody>
+        </table>
+        <?php  
+            if(!$registro){  echo "<h2 class='text-center'>No se ha encontrado productos con ese codigo</h2>"; }
+        ?>        
+    </div>
+</div>
+
+<script type="text/javascript">
+	function deletee(a) {
+		location.href="borrarproducto.php?id="+a;
+	}
+</script>
+
+<?php
+	require("footer.php");
+?>
