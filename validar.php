@@ -15,7 +15,7 @@ if ($num_register!=0){
     session_start();
     $user=$_POST["username"];
     
-    $sql="select rol from users where username='$user'";
+    $sql="select * from users where username='$user'";
     $resultado=$base->prepare($sql);
     $resultado->execute();
     $registros=$resultado->fetch(PDO::FETCH_ASSOC);
@@ -27,6 +27,7 @@ if ($num_register!=0){
     if(strcasecmp($registros["rol"],"empleado")==0){
         $_SESSION["rol"]="empleado";
         $_SESSION["username"]=$user;
+        $_SESSION["id"]=$registros["id"];
         $_SESSION["productosfacturados"]=1;
 
         header("location: facturar.php");

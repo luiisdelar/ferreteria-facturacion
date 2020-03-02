@@ -3,6 +3,7 @@ body{
     margin: 0px;
     padding: 0px;
     font-family: 'Times New Roman', Times, serif;
+    background-color: #f003 !important;
 }
 
 .login-boxx {
@@ -10,7 +11,7 @@ body{
 }
 
 .box {
-    background-color: #d0cfd0;
+    background-color: #eae6e6;
     box-shadow: 1rem .8rem 1.7rem rgba(0, 0, 0, 0.5);
     border: 1px solid red;
     border-top-right-radius: 8%;
@@ -38,4 +39,37 @@ nav form .buscador {
     border-radius: 5%;
     border: 1px solid white;
     margin-bottom: 0px;
+}
+
+.verde {
+    color: #03b003;
+}
+
+.dot {
+    border: 6px dotted red;
+}
+
+.dot2 {
+    border-top: 3px dotted #03b003;
+}
+
+.dot3 {
+    border-top: 2px dotted black;
+}
+
+.dot4 {
+    border-bottom: 2px dotted black;
+}
+
+
+.caja {
+    padding-bottom: 30px;
+    padding-top: 15px;
+    background-color: #b2ceb9;
+    border: 2px dotted black
+}
+
+
+table.table-dark {
+    background-color: #24232be6 !important;
 }

@@ -5,17 +5,18 @@
         header("location: usuarionoregistrado.php");
     }
 
-    $codigo=$_POST["codigo"];
+    $busqueda=trim($_POST["codigo"]);
 
     require("connection.php");
-    
+	
     $sql="select *
           from productos
-          where codigo='$codigo'";
+		  where nombre like '%".$busqueda."%'";
+		  
     $resultado=$base->prepare($sql);
 	$resultado->execute();
-    $registro=$resultado->fetch(PDO::FETCH_ASSOC);
-  
+    
+	$band=false;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
@@ -25,12 +26,13 @@
 	<form action="buscarproducto.php" method="POST">
 		<div class="justify-content-end">
 			<div class="justify-content-end">
-				
-					<input type="text" placeholder="Codigo Producto" name="codigo" class="buscador">
-					<input class="btn btn-outline-light" type="submit" name="buscar" value="Buscar">
-					
-			
+				<input type="text" placeholder="Nombre Producto" name="codigo" class="buscador">
+				<input class="btn btn-outline-light" type="submit" name="buscar" value="Buscar">
+				<?php 
+                    if($session=='admin'){
+                ?>
 				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Agregar Producto" onclick="location.href='aggproducto.php';">
+					<?php } ?>
 				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Salir" onclick="location.href='close.php';">
 			</div>
 		</div>
@@ -38,25 +40,28 @@
 </nav>
 
 <div class="container">
-	<h2 class="text-center"> Resultados de la busqueda </h4>
+	<h2 class="text-center"> Resultados de la busqueda "<?php echo $busqueda ?>"</h4>
 	<div class="table-responsive">
 		<table class="table table-dark table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Codigo</th>
-					<th>Cantidad</th>
+					<th>Cantidad disponible</th>
+					<th>Precio de venta</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
             <?php 
-               if($registro){
+               while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+				   $band=true;
 			?> 
 					<tr>
 						<td><?php echo $registro['nombre']; ?></td>
 						<td><?php echo $registro['codigo']; ?></td>
 						<td><?php echo $registro['cantidad']; ?></td>
+						<td><?php echo $registro['precio_venta']; ?></td>
 						<td>
                         <?php 
                             if($session=='admin'){
@@ -74,7 +79,7 @@
             </tbody>
         </table>
         <?php  
-            if(!$registro){  echo "<h2 class='text-center'>No se ha encontrado productos con ese codigo</h2>"; }
+            if(!$band){  echo "<h2 class='text-center'>No se ha encontrado productos con esa coincidencia </h2>"; }
         ?>        
     </div>
 </div>

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="bootstrap4.1/css/bootstrap.css">
 		<script src="bootstrap4.1/js/jquery3.3.1.js"></script>
 		<script type="text/javascript" src="bootstrap4.1/js/bootstrap.js"></script>
-		<title> Ferreteria </title>
+		<title>🔧 Ferreteria </title>
 	</head>
 	
 	<body>

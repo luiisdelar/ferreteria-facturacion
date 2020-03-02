@@ -18,13 +18,14 @@ $productos=mysqli_query($connection,"SELECT * FROM productos");
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
 	<div>  
-		<a class="navbar-brand" href="admin.php"> Panel de Administracion</a>
+		<a class="navbar-brand" href="admin.php">Variedades en Lubricantes Jhon-Jhonny</a>
 	</div>  
 	<form action="buscarproducto.php" method="POST">
 		<div class="justify-content-end">
 			<div class="justify-content-end">
-				<input type="text" placeholder="Codigo Producto" name="codigo"  class="buscador">
+				<input type="text" placeholder="Nombre Producto" name="codigo"  class="buscador">
 				<input class="btn btn-outline-light" type="submit" name="buscar" value="Buscar">
+				<input type="button" onclick="location.href='nuevouser.php';" value="Registrar Empleado" class="btn btn-outline-light my-2 my-sm-0" />
 				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Agregar Producto" onclick="location.href='aggproducto.php';">
 				<input class="btn btn-outline-light my-2 my-sm-0" type="button" value="Salir" onclick="location.href='close.php';">
 			</div>
@@ -93,8 +94,8 @@ $productos=mysqli_query($connection,"SELECT * FROM productos");
 						<td><?php echo $registros['codigo']; ?></td>
 						<td><?php echo $registros['cantidad']; ?></td>
 						<td><?php echo $registros['cantidad_vendidos']; ?></td>
-						<td><?php echo $registros['precio']; ?></td>
-						<td><?php echo $registros['precio_venta']; ?></td>
+						<td><?php echo $registros['precio']; ?> Bs</td>
+						<td><?php echo $registros['precio_venta']; ?> Bs</td>
 						<td>
 							<?php 
 								
@@ -105,8 +106,10 @@ $productos=mysqli_query($connection,"SELECT * FROM productos");
 								$resultado4=$base->prepare($sql4);
 								$resultado4->execute();
 								$registros4=$resultado4->fetch(PDO::FETCH_ASSOC);
-								
-								$porc=($registros4["sum(cantidad)"]*100)/$registros3["sum(cantidad)"];
+								$porc=0;
+								if($registros3["sum(cantidad)"]!=0){
+									$porc=($registros4["sum(cantidad)"]*100)/$registros3["sum(cantidad)"];
+								}
 								echo (round($porc * 10) / 10).'%'; 
 							?>
 						</td>
@@ -189,10 +192,9 @@ $productos=mysqli_query($connection,"SELECT * FROM productos");
 
 			<?php endif ?>
 	</div>
-
-
-
-
+</div>
+<div class="row d-flex justify-content-center">
+	<a href="reportes.php" class="btn btn btn-success">Generar Reportes</a>
 </div>
 
 <script type="text/javascript">
